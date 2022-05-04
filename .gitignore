@@ -135,3 +135,7 @@ all.config
 
 # fetched Android config fragments
 kernel/configs/android-*.cfg
+
+#mine
+build2.sh
+/out
