@@ -6,6 +6,7 @@
 #ifndef BLAKE2S_H
 #define BLAKE2S_H
 
+#include <linux/bug.h>
 #include <linux/types.h>
 #include <linux/kernel.h>
 #include <linux/string.h>
