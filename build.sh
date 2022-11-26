@@ -5,32 +5,36 @@
 KERNEL_DEFCONFIG=vendor/lmi_user_defconfig
 ANYKERNEL3_DIR=$PWD/AnyKernel3/
 FINAL_KERNEL_ZIP=Perf_LMI_v267_A13_raystef66.zip
+
+# paths
+TC="/home/raystef66/kernel/prebuilts"
+
+PATH=${TC}/clang-r416183b1/bin:${TC}/aarch64/bin:${TC}/arm/bin:$PATH
+
+export LLVM=1
+export CC=clang
+export CROSS_COMPILE=aarch64-linux-gnu-
 export ARCH=arm64
+export USE_CCACHE=1
 
 # Speed up build process
 MAKE="./makeparallel"
 
-BUILD_START=$(date +"%s")
-blue='\033[1;34m'
-yellow='\033[1;33m'
-nocol='\033[0m'
+make O=out ARCH=arm64 vendor/lmi_user_defconfig
 
-# Always do clean build lol
-echo -e "$yellow**** Cleaning ****$nocol"
-mkdir -p out
-make O=out clean
+START=$(date +"%s")
 
-echo -e "$yellow**** Kernel defconfig is set to $KERNEL_DEFCONFIG ****$nocol"
-echo -e "$blue***********************************************"
-echo "          BUILDING KERNEL          "
-echo -e "***********************************************$nocol"
-make $KERNEL_DEFCONFIG O=out
-make -j$(nproc --all) O=out \
-                      ARCH=arm64 \
-                      CC=/home/raystef66/kernel/prebuilts/clang-r445002/bin/clang \
-                      CLANG_TRIPLE=aarch64-linux-gnu- \
-                      CROSS_COMPILE=/home/raystef66/kernel/prebuilts/aarch64-linux-android-4.9/bin/aarch64-linux-android- \
-                      CROSS_COMPILE_ARM32=/home/raystef66/kernel/prebuilts/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
+make ARCH=arm64 \
+        O=out \
+        CC=clang \
+		AR=llvm-ar \
+        LD=ld.lld \
+        NM=llvm-nm \
+        OBJCOPY=llvm-objcopy \
+        OBJDUMP=llvm-objdump \
+        STRIP=llvm-strip \
+        -j$(nproc --all)
+               
 
 echo -e "$yellow**** Verify Image.gz-dtb & dtbo.img ****$nocol"
 ls $PWD/out/arch/arm64/boot/Image.gz-dtb
@@ -59,7 +63,7 @@ rm -rf $ANYKERNEL3_DIR/Image.gz-dtb
 rm -rf $ANYKERNEL3_DIR/dtbo.img
 rm -rf out/
 
-BUILD_END=$(date +"%s")
-DIFF=$(($BUILD_END - $BUILD_START))
-echo -e "$yellow Build completed in $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds.$nocol"
+END=$(date +"%s")
+DIFF=$((END - START))
+echo -e '\033[01;32m' "Kernel compiled successfully in $((DIFF / 60)) minute(s) and $((DIFF % 60)) seconds" || exit
 sha1sum $KERNELDIR/$FINAL_KERNEL_ZIP
