@@ -120,40 +120,13 @@ int mb_cache_entry_create(struct mb_cache *cache, gfp_t mask, u32 key,
 		set_bit(MBE_REUSABLE_B, &entry->e_flags);
 	head = mb_cache_entry_head(cache, key);
 	hlist_bl_lock(head);
-	list_for_each_entry(tmp_req, &bucket->req_list, lnode) {
-		if (tmp_req->e_key == key && tmp_req->e_value == value) {
-			hlist_bl_unlock(head);
-			return -EBUSY;
-		}
-	}
 	hlist_bl_for_each_entry(dup, dup_node, head, e_hash_list) {
 		if (dup->e_key == key && dup->e_value == value) {
 			hlist_bl_unlock(head);
+			kmem_cache_free(mb_entry_cache, entry);
 			return -EBUSY;
 		}
 	}
-	list_add(&req.lnode, &bucket->req_list);
-	hlist_bl_unlock(head);
-
-	entry = kmem_cache_alloc(mb_entry_cache, mask);
-	if (!entry) {
-		hlist_bl_lock(head);
-		list_del(&req.lnode);
-		hlist_bl_unlock(head);
-		return -ENOMEM;
-	}
-
-	*entry = (typeof(*entry)){
-		.e_list = LIST_HEAD_INIT(entry->e_list),
-		/* One ref for hash, one ref returned */
-		.e_refcnt = ATOMIC_INIT(2),
-		.e_key = key,
-		.e_value = value,
-		.e_reusable = reusable
-	};
-
-	hlist_bl_lock(head);
-	list_del(&req.lnode);
 	hlist_bl_add_head(&entry->e_hash_list, head);
 	hlist_bl_unlock(head);
 	spin_lock(&cache->c_list_lock);
