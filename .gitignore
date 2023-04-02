@@ -148,3 +148,5 @@ scripts/update_defconfig
 # mine
 out/
 build2.sh
+log.txt
+build.sh
