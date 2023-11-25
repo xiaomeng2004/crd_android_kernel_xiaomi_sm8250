@@ -4154,8 +4154,12 @@ static int f2fs_ioc_decompress_file(struct file *filp, unsigned long arg)
 			F2FS_OPTION(sbi).compress_mode != COMPR_MODE_USER)
 		return -EOPNOTSUPP;
 
-	if (!(filp->f_mode & FMODE_WRITE))
-		return -EBADF;
+	map.m_lblk = 0;
+	map.m_pblk = 0;
+	map.m_next_pgofs = NULL;
+	map.m_next_extent = &m_next_extent;
+	map.m_seg_type = NO_CHECK_TYPE;
+	end = F2FS_I_SB(inode)->max_file_blocks;
 
 	if (!f2fs_compressed_file(inode))
 		return -EINVAL;
