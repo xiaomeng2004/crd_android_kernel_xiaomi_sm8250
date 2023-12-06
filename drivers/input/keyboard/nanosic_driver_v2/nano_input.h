@@ -90,8 +90,6 @@ static unsigned char HID_MouseReportDescriptor[] = {
 
 #define TOUCH_PAD_X_SIZE_DESC 2879
 #define TOUCH_PAD_Y_SIZE_DESC 1799
-#define MI_DISPLAY_X_SIZE_DESC 363
-#define MI_DISPLAY_Y_SIZE_DESC 214
 
 // touch:reportID(0x19)
 static unsigned char HID_TouchReportDescriptor[] = {
@@ -149,15 +147,15 @@ static unsigned char HID_TouchReportDescriptor[] = {
 	0x65, 0x13, //     Unit(Inch,Englinear)
 	0x09, 0x30, //     Usage (X)
 	0x35, 0x00, //     Physical Minimum (0)
-	0x46, (MI_DISPLAY_X_SIZE_DESC & 0xff),
-	((MI_DISPLAY_X_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (400)
+	0x46, (TOUCH_PAD_X_SIZE_DESC & 0xff),
+	((TOUCH_PAD_X_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (400)
 	0x81,
 	0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
 	0x09, 0x31, //     Usage (Y)
 	0x26, (TOUCH_PAD_Y_SIZE_DESC & 0xff),
 	((TOUCH_PAD_Y_SIZE_DESC >> 8) & 0xff), //     Logical Maximum (1884)
-	0x46, (MI_DISPLAY_Y_SIZE_DESC & 0xff),
-	((MI_DISPLAY_Y_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (235)
+	0x46, (TOUCH_PAD_Y_SIZE_DESC & 0xff),
+	((TOUCH_PAD_Y_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (235)
 	0x81,
 	0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
 	0xC0, //   End Collection
@@ -194,15 +192,15 @@ static unsigned char HID_TouchReportDescriptor[] = {
 	0x65, 0x13, //     Unit(Inch,Englinear)
 	0x09, 0x30, //     Usage (X)
 	0x35, 0x00, //     Physical Minimum (0)
-	0x46, (MI_DISPLAY_X_SIZE_DESC & 0xff),
-	((MI_DISPLAY_X_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (4095)
+	0x46, (TOUCH_PAD_X_SIZE_DESC & 0xff),
+	((TOUCH_PAD_X_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (4095)
 	0x81,
 	0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
 	0x09, 0x31, //     Usage (Y)
 	0x26, (TOUCH_PAD_Y_SIZE_DESC & 0xff),
 	((TOUCH_PAD_Y_SIZE_DESC >> 8) & 0xff), //     Logical Maximum (1884)
-	0x46, (MI_DISPLAY_Y_SIZE_DESC & 0xff),
-	((MI_DISPLAY_Y_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (4095)
+	0x46, (TOUCH_PAD_Y_SIZE_DESC & 0xff),
+	((TOUCH_PAD_Y_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (4095)
 	0x81,
 	0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
 	0xC0, //   End Collection
@@ -239,15 +237,15 @@ static unsigned char HID_TouchReportDescriptor[] = {
 	0x65, 0x13, //     Unit(Inch,Englinear)
 	0x09, 0x30, //     Usage (X)
 	0x35, 0x00, //     Physical Minimum (0)
-	0x46, (MI_DISPLAY_X_SIZE_DESC & 0xff),
-	((MI_DISPLAY_X_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (4095)
+	0x46, (TOUCH_PAD_X_SIZE_DESC & 0xff),
+	((TOUCH_PAD_X_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (4095)
 	0x81,
 	0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
 	0x09, 0x31, //     Usage (Y)
 	0x26, (TOUCH_PAD_Y_SIZE_DESC & 0xff),
 	((TOUCH_PAD_Y_SIZE_DESC >> 8) & 0xff), //     Logical Maximum (1884)
-	0x46, (MI_DISPLAY_Y_SIZE_DESC & 0xff),
-	((MI_DISPLAY_Y_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (4095)
+	0x46, (TOUCH_PAD_Y_SIZE_DESC & 0xff),
+	((TOUCH_PAD_Y_SIZE_DESC >> 8) & 0xff), //     Physical Maximum (4095)
 	0x81,
 	0x02, //     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
 	0xC0, //   End Collection
