@@ -358,7 +358,7 @@ extern int ksu_handle_faccessat(int *dfd, const char __user **filename_user, int
  * switching the fsuid/fsgid around to the real ones.
  */
 long do_faccessat(int dfd, const char __user *filename, int mode)
-
+{
    	#ifdef CONFIG_KSU
 	ksu_handle_faccessat(&dfd, &filename, &mode, NULL);
    	#endif
